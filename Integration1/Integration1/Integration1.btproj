@@ -48,6 +48,11 @@
       <SubType>Task</SubType>
     </Map>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="employeeschemacreate.sql" />
+    <Content Include="sp_employeeImport.sql" />
+    <Content Include="tblEmployees.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.CurrentVersion.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Azure Integration SDK\IntegrationTasks.targets" />
 </Project>
