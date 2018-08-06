@@ -1,28 +1,32 @@
-/****** Object:  StoredProcedure [dbo].[EmployeeInsert]    Script Date: 05/08/2018 08:54:47 ******/
+USE [employees]
+GO
+
+/****** Object:  StoredProcedure [dbo].[EmployeeInsert]    Script Date: 06/08/2018 21:20:41 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
+
+
 /*
   TEST STATEMENT:
   -------------------------------
-  EXECUTE EmployeeInsert N'<Root>
-    <Employee FirstName="Fred" MiddleName="brian" LastName="Flintstone" />
+  EXECUTE EmployeeInsert N'<Person>
+    <Name FirstName="Fred" MiddleName="brian" Surname="Flintstone" />
       
-  </Root>'
+  </Person>'
   -------------------------------
   */
   CREATE PROCEDURE [dbo].[EmployeeInsert]
       @EmployeeStream VARCHAR(MAX)
   AS
   BEGIN
- 
       -- Fix Incoming XML: Logic App add a "?" char at the beginning of the string
       SET @EmployeeStream = REPLACE(@EmployeeStream, '?<', '<');
  
-      DECLARE @EmployeeXml XML(EmployeeXml) = CAST(@EmployeeStream AS XML(EmployeeXml));
+      DECLARE @EmployeeXml XML = @EmployeeStream;
       DECLARE @EmployeeId UNIQUEIDENTIFIER = NEWID();
  
       INSERT INTO Employees
@@ -38,9 +42,11 @@ GO
           MiddleName = EmployeeObject.Header.value('./@MiddleName', 'varchar(50)'),
           LastName = EmployeeObject.Header.value('./@Surname', 'varchar(50)')
       FROM
-          @EmployeeXml.nodes('/Person/Name') AS EmployeeObject(Header);
+          @EmployeeXml.nodes('//Name') AS EmployeeObject(Header);
  
   END
+
+
 GO
 
 

@@ -9,8 +9,7 @@ CREATE TABLE [dbo].[Employees](
 	[EmployeeId] [uniqueidentifier] NOT NULL,
 	[FirstName] [varchar](50) NULL,
 	[MiddleName] [varchar](50) NULL,
-	[LastName] [varchar](50) NULL,
-	[THIRDPARTYID] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL
 )
 
 GO
